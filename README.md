@@ -19,16 +19,16 @@ You'll need to manually install the following JARs:
 Usage
 =====
 
-  Phaxio.apiKey = "your_api_key";
-  Phaxio.apiSecret = "your_api_secret";
+    Phaxio.apiKey = "your_api_key";
+    Phaxio.apiSecret = "your_api_secret";
+    
+    Map<String,Object> options = new HashMap<String,Object>();
+    options.put("string_data", "asdf");
 
-  Map<String,Object> options = new HashMap<String,Object>();
-  options.put("string_data", "asdf");
+    List<String> phoneNumbers = new ArrayList<String>();
+    phoneNumbers.add("4141234567");
 
-  List<String> phoneNumbers = new ArrayList<String>();
-  phoneNumbers.add("4141234567");
+    List<File> files = new ArrayList<File>();
+    files.add(new File("./test/apple.pdf"));
 
-  List<File> files = new ArrayList<File>();
-  files.add(new File("./test/apple.pdf"));
-
-  Long faxId = Fax.send(phoneNumbers, files, options);
+    Long faxId = Fax.send(phoneNumbers, files, options);
