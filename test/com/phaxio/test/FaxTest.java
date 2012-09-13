@@ -1,7 +1,7 @@
 package com.phaxio.test;
 
 import com.phaxio.Fax;
-import com.phaxio.PhaxioTest;
+import com.phaxio.PhaxioTestAbstract;
 import com.phaxio.exception.PhaxioException;
 import java.io.File;
 import java.io.InputStream;
@@ -12,7 +12,7 @@ import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class FaxTest extends PhaxioTest {
+public class FaxTest extends PhaxioTestAbstract {
 
     @Test
     public void sendTest() throws PhaxioException {
