@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -32,8 +34,8 @@ public class HttpRequestHelper {
     private int statusCode;
     private String contentType;
 
-    public String doRequest(String urlString, Map<String, Object> params, String method) throws ProtocolException,
-            MalformedURLException, IOException {
+    public InputStream doRequest(String urlString, Map<String, Object> params, String method)
+            throws ProtocolException, MalformedURLException, IOException {
 
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -42,11 +44,12 @@ public class HttpRequestHelper {
         conn.setUseCaches(false);
         conn.setRequestMethod(method);
         conn.setRequestProperty("Connection", "Keep-Alive");
-        DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 
         if (method.equals("POST")) {
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
         }
+
+        DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
 
         if (params != null && params.size() > 0) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
@@ -57,18 +60,11 @@ public class HttpRequestHelper {
         dos.flush();
         dos.close();
 
-        StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        if (conn.getResponseCode() >= 400){
+            return conn.getErrorStream();
+        }
 
-        String inputLine;
-        while ((inputLine = in.readLine()) != null)
-            stringBuilder.append(inputLine);
-        in.close();
-
-        statusCode = conn.getResponseCode();
-        contentType = conn.getContentType();
-
-        return stringBuilder.toString();
+        return conn.getInputStream();
     }
 
     private void addParameterToRequest(DataOutputStream dos, String key, Object value) throws IOException {
