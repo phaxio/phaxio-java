@@ -9,11 +9,25 @@ public enum FaxStatus {
     FAILURE("failure"),
     PARTIAL_SUCCESS("partialsuccess");
 
-    String name;
+    private final String apiName;
 
-    FaxStatus(String name){
-        this.name = name;
+    FaxStatus(String apiName){
+        this.apiName = apiName;
+    }
+    
+    public String getApiName(){
+        return apiName;
     }
 
+    public static FaxStatus fromApiName(String apiName) {
+        if (apiName != null) {
+            for (FaxStatus fs : FaxStatus.values()) {
+                if (apiName.equalsIgnoreCase(fs.apiName)) {
+                    return fs;
+                }
+            }
+        }
+        return null;
+    }
 
 }

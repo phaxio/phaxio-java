@@ -1,5 +1,6 @@
 package com.phaxio.test;
 
+import com.phaxio.util.PagedList;
 import com.phaxio.Fax;
 import com.phaxio.PhaxioTestAbstract;
 import com.phaxio.exception.PhaxioException;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class FaxTest extends PhaxioTestAbstract {
+
 
     @Test
     public void sendTest() throws PhaxioException {
@@ -29,7 +31,7 @@ public class FaxTest extends PhaxioTestAbstract {
     }
 
     @Test
-    public void cancelTest() throws PhaxioException {
+    public void cancelTest() throws PhaxioException, InterruptedException {
         List<String> phoneNumbers = new ArrayList<String>();
         phoneNumbers.add("4141234567");
 
@@ -40,6 +42,7 @@ public class FaxTest extends PhaxioTestAbstract {
 
         Long faxId = Fax.send(phoneNumbers, null, options);
         assertNotNull(faxId);
+        Thread.sleep(2000);
         Fax.cancel(String.valueOf(faxId));
     }
 

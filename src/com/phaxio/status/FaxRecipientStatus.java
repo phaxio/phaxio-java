@@ -11,10 +11,26 @@ public enum FaxRecipientStatus {
     CALL_ACTIVE("callactive");
 
 
-    private final String name;
+    private final String apiName;
 
-    FaxRecipientStatus(String name){
-        this.name = name;
+    FaxRecipientStatus(String apiName){
+        this.apiName = apiName;
+    }
+
+
+    public String getApiName(){
+        return apiName;
+    }
+
+    public static FaxRecipientStatus fromApiName(String apiName) {
+        if (apiName != null) {
+            for (FaxRecipientStatus fs : FaxRecipientStatus.values()) {
+                if (apiName.equalsIgnoreCase(fs.apiName)) {
+                    return fs;
+                }
+            }
+        }
+        return null;
     }
 
 
