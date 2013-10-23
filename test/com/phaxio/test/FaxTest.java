@@ -28,8 +28,14 @@ public class FaxTest extends PhaxioTestAbstract {
         assertNotNull(faxId);
     }
 
+
     @Test
-    public void cancelTest() throws PhaxioException {
+    public void listTest() throws PhaxioException, InterruptedException {
+        
+    }
+
+    @Test
+    public void cancelTest() throws PhaxioException, InterruptedException {
         List<String> phoneNumbers = new ArrayList<String>();
         phoneNumbers.add("4141234567");
 
@@ -40,6 +46,8 @@ public class FaxTest extends PhaxioTestAbstract {
 
         Long faxId = Fax.send(phoneNumbers, null, options);
         assertNotNull(faxId);
+
+        Thread.sleep(2000);     //gotta sleep here so we dont trigger any rate limiting problems.
         Fax.cancel(String.valueOf(faxId));
     }
 

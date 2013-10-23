@@ -86,8 +86,24 @@ public class Fax {
         Phaxio.doRequest("faxCancel", options, "POST");
     }
 
+    public static PagedList list(Map<String,Object> options) throws PhaxioException {
+        return list(null, null, options);
+    }
+
     public static PagedList list(Date start, Date end, Map<String,Object> options) throws PhaxioException {
         PagedList<Fax> list = new PagedList<Fax>();
+
+        if (options == null){
+            options = new HashMap<String,Object>();
+        }
+
+        if (start != null){
+            options.put("start", start.getTime());
+        }
+
+        if (end != null){
+            options.put("end", end.getTime());
+        }
 
         JsonObject result = Phaxio.doRequest("faxList", options, "POST");
         JsonObject paging = result.get("paging").getAsJsonObject();
