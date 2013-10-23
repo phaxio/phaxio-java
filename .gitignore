@@ -6,8 +6,8 @@
 
 build/
 lib/
+dist/
 nbproject/
-build.xml
 manifest.mf
 test/com/phaxio/test/Playarea.java
 test/key.json

@@ -14,7 +14,7 @@ abstract public class PhaxioTestAbstract {
     @Before
     public void loadCredentials() throws Exception{
         FileInputStream fis = new FileInputStream(new File("./test/key.json"));
-
+        Thread.sleep(1000);
         String line = "";
         StringBuilder builder = new StringBuilder();
         BufferedReader br = new BufferedReader(new InputStreamReader(fis));
