@@ -98,11 +98,11 @@ public class Fax {
         }
 
         if (start != null){
-            options.put("start", start.getTime());
+            options.put("start", start.getTime() / 1000);
         }
 
         if (end != null){
-            options.put("end", end.getTime());
+            options.put("end", end.getTime() / 1000);
         }
 
         JsonObject result = Phaxio.doRequest("faxList", options, "POST");
@@ -160,8 +160,8 @@ public class Fax {
         if (object.has("direction")) this.direction = object.get("direction").getAsString();
         if (object.has("status")) this.status = FaxStatus.fromApiName(object.get("status").getAsString());
         if (object.has("is_test")) this.isTest = object.get("is_test").getAsBoolean();
-        if (object.has("requested_at")) this.requestedAt = new Date(object.get("requested_at").getAsLong());
-        if (object.has("completed_at")) this.completedAt = new Date(object.get("completed_at").getAsLong());
+        if (object.has("requested_at")) this.requestedAt = new Date(object.get("requested_at").getAsLong() * 1000);
+        if (object.has("completed_at")) this.completedAt = new Date(object.get("completed_at").getAsLong() * 1000);
 
         if (object.has("recipients")){
             this.recipients = new ArrayList<FaxRecipient>();
