@@ -13,8 +13,15 @@ Installation
 
 You'll need to manually install the following JARs:
 
-* The Phaxio JAR from https://github.com/phaxio/phaxio-java/blob/master/dist/phaxio-java-1.0.jar
+* The Phaxio JAR
 * [Google Gson](http://code.google.com/p/google-gson/) from <http://google-gson.googlecode.com/files/google-gson-1.7.1-release.zip>.
+
+Creating the jar
+================
+1. Clone or download the repository
+2. cd phaxio-java
+3. run 'ant'
+4. jar can be found in the dist directory
 
 Usage
 =====
@@ -32,3 +39,5 @@ Usage
     files.add(new File("./test/apple.pdf"));
 
     Long faxId = Fax.send(phoneNumbers, files, options);
+    
+    
