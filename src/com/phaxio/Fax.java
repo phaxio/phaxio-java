@@ -119,6 +119,7 @@ public class Fax {
             fax.mapJsonToSelf(element.getAsJsonObject());
             faxes.add(fax);
         }
+        list.setElements(faxes);
 
         return list;
     }
@@ -157,7 +158,7 @@ public class Fax {
         if (object.has("id")) this.id = object.get("id").getAsLong();
         if (object.has("num_pages")) this.numPages = object.get("num_pages").getAsInt();
         if (object.has("direction")) this.direction = object.get("direction").getAsString();
-        if (object.has("status")) this.status = FaxStatus.valueOf(object.get("status").getAsString());
+        if (object.has("status")) this.status = FaxStatus.fromApiName(object.get("status").getAsString());
         if (object.has("is_test")) this.isTest = object.get("is_test").getAsBoolean();
         if (object.has("requested_at")) this.requestedAt = new Date(object.get("requested_at").getAsLong());
         if (object.has("completed_at")) this.completedAt = new Date(object.get("completed_at").getAsLong());

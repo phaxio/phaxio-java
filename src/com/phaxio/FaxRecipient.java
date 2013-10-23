@@ -25,7 +25,7 @@ public class FaxRecipient {
 
     void mapJsonToSelf(JsonObject object){
         if (object.has("number")) this.phoneNumber = object.get("number").getAsString();
-        if (object.has("status")) this.status = FaxRecipientStatus.valueOf(object.get("status").getAsString());
+        if (object.has("status")) this.status = FaxRecipientStatus.fromApiName(object.get("status").getAsString());
         if (object.has("completed_at")) this.completedAt = new Date(object.get("completed_at").getAsLong());
     }
 }

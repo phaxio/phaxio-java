@@ -1,5 +1,6 @@
 package com.phaxio.test;
 
+import com.phaxio.util.PagedList;
 import com.phaxio.Fax;
 import com.phaxio.PhaxioTestAbstract;
 import com.phaxio.exception.PhaxioException;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class FaxTest extends PhaxioTestAbstract {
+
 
     @Test
     public void sendTest() throws PhaxioException {
