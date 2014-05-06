@@ -47,13 +47,17 @@ public class Fax {
             options = new HashMap<String,Object>();
         }
 
+	int i = 0;
         for(String number : phoneNumbers){
-            options.put("to[]", number);
+            options.put("to[" + i + "]", number);
+	    i++;
         }
 
         if (files != null){
+	    i = 0;
             for (File file : files){
-                options.put("filename[]", file);
+                options.put("filename[" + i + "]", file);
+		i++;
             }
         }
 
