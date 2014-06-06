@@ -14,14 +14,15 @@ Installation
 You'll need to manually install the following JARs:
 
 * The Phaxio JAR
-* [Google Gson](http://code.google.com/p/google-gson/) from <http://google-gson.googlecode.com/files/google-gson-1.7.1-release.zip>.
+* [Google Gson](http://code.google.com/p/google-gson/) from <http://google-gson.googlecode.com/files/google-gson-2.2.4-release.zip>.
 
 Creating the jar
 ================
 1. Clone or download the repository
 2. cd phaxio-java
-3. run 'ant'
-4. jar can be found in the dist directory
+3. mkdir lib && cd lib && wget http://google-gson.googlecode.com/files/google-gson-2.2.4-release.zip && unzip google-gson-2.2.4-release.zip
+4. run 'ant'
+5. jar can be found in the dist directory
 
 Usage
 =====

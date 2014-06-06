@@ -29,7 +29,7 @@ public class FaxTest extends PhaxioTestAbstract {
 
     private long sendATestFax() throws PhaxioException {
         List<String> phoneNumbers = new ArrayList<String>();
-        phoneNumbers.add("4141234567");
+        phoneNumbers.add("4142234567");
 
         Map<String,Object> options = new HashMap<String,Object>();
         options.put("string_data", "test sending a fax");
@@ -73,7 +73,7 @@ public class FaxTest extends PhaxioTestAbstract {
     @Test
     public void cancelTest() throws PhaxioException, InterruptedException {
         List<String> phoneNumbers = new ArrayList<String>();
-        phoneNumbers.add("4141234567");
+        phoneNumbers.add("4142234567");
 
         Map<String,Object> options = new HashMap<String,Object>();
         options.put("string_data", "text");
