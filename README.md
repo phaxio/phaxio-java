@@ -21,7 +21,7 @@ Creating the jar
 1. Clone or download the repository
 2. cd phaxio-java
 3. mkdir lib && cd lib && wget http://google-gson.googlecode.com/files/google-gson-2.2.4-release.zip && unzip google-gson-2.2.4-release.zip
-4. run 'ant'
+4. run 'ant jar'
 5. jar can be found in the dist directory
 
 Usage
