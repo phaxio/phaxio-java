@@ -1,9 +1,14 @@
 package com.phaxio.test;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.phaxio.util.PagedList;
 import com.phaxio.Fax;
+import com.phaxio.FaxRecipient;
 import com.phaxio.PhaxioTestAbstract;
 import com.phaxio.exception.PhaxioException;
+import com.phaxio.status.FaxStatus;
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -20,7 +25,6 @@ import static org.junit.Assert.*;
  * @author jnankin
  */
 public class FaxTest extends PhaxioTestAbstract {
-
 
     @Test
     public void sendTest() throws PhaxioException {
@@ -86,6 +90,21 @@ public class FaxTest extends PhaxioTestAbstract {
 
         Thread.sleep(2000);     //gotta sleep here so we dont trigger any rate limiting problems.
         Fax.cancel(String.valueOf(faxId));
+    }
+    
+    @Test
+    public void loadFaxFromJsonTest() throws PhaxioException, InterruptedException {
+        String json = "{\"id\":13112687,\"num_pages\":1,\"cost\":7,\"direction\":\"sent\",\"status\":\"success\",\"is_test\":false,\"requested_at\":1435602418,\"completed_at\":1435602496,\"recipients\":[{\"number\":\"+18142341450\",\"status\":\"success\",\"bitrate\":\"9600\",\"resolution\":\"8040\",\"completed_at\":1435602495}]}";
+        JsonElement jelement = new JsonParser().parse(json);
+        Fax fax = new Fax(jelement.getAsJsonObject());
+        assertEquals(13112687, fax.getId());
+        assertEquals(1, fax.getNumPages());
+        assertEquals(7, fax.getCost());
+        assertEquals(Fax.SENT, fax.getDirection());
+        assertEquals(FaxStatus.SUCCESS, fax.getStatus());
+        assertEquals(1435602496000l, fax.getCompletedAt().getTime());
+        assertEquals(1435602418000l, fax.getRequestedAt().getTime());
+        assertEquals(1, fax.getRecipients().size());
     }
 
 }

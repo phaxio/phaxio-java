@@ -20,6 +20,9 @@ public class Fax {
     public static final String HTML = "html";
     public static final String TEXT = "text";
     public static final String URL = "url";
+    
+    public static final String SENT = "sent";
+    public static final String RECEIVED = "received";
 
     private long id;
     private int numPages;
@@ -35,6 +38,14 @@ public class Fax {
     public static final String SMALL_THUMBNAIL = "s";
     public static final String LARGEL_THUMBNAIL = "l";
 
+    public Fax(){
+        
+    }
+    
+    public Fax(JsonObject fax){
+        mapJsonToSelf(fax);
+    }
+    
     /**
      * @param phoneNumbers
      * @param files
@@ -166,7 +177,8 @@ public class Fax {
         if (object.has("is_test")) this.isTest = object.get("is_test").getAsBoolean();
         if (object.has("requested_at")) this.requestedAt = new Date(object.get("requested_at").getAsLong() * 1000);
         if (object.has("completed_at")) this.completedAt = new Date(object.get("completed_at").getAsLong() * 1000);
-
+        if (object.has("cost")) this.cost = object.get("cost").getAsInt();
+        
         if (object.has("recipients")){
             this.recipients = new ArrayList<FaxRecipient>();
 
@@ -174,6 +186,7 @@ public class Fax {
             for (JsonElement el : array){
                 FaxRecipient recip = new FaxRecipient();
                 recip.mapJsonToSelf((JsonObject)el);
+                this.recipients.add(recip);
             }
         }
     }
