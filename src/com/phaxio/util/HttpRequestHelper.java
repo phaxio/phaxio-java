@@ -4,6 +4,7 @@
  */
 package com.phaxio.util;
 
+import com.phaxio.UploadInputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -70,7 +71,11 @@ public class HttpRequestHelper {
     private void addParameterToRequest(DataOutputStream dos, String key, Object value) throws IOException {
         if (value instanceof File) {
             addFileParameterToRequest(dos, key, (File) value);
-        } else {
+        } 
+        else if (value instanceof UploadInputStream){
+            addUploadInputStreamParameterToRequest(dos, key, (UploadInputStream) value);
+        }
+        else {
             addNormalParameterToRequest(dos, key, value);
         }
 
@@ -83,32 +88,35 @@ public class HttpRequestHelper {
     }
 
     private void addFileParameterToRequest(DataOutputStream dos, String key, File file) throws FileNotFoundException, IOException {
+        addUploadInputStreamParameterToRequest(dos, key, new UploadInputStream(new FileInputStream(file), file.getName()));
+    }
+
+    private void addUploadInputStreamParameterToRequest(DataOutputStream dos, String key, UploadInputStream uis) throws IOException {
         int bytesRead, bytesAvailable, bufferSize;
 
         byte[] buffer;
         // Send a binary file
         dos.writeBytes(twoHyphens + boundary + lineEnd);
-        dos.writeBytes("Content-Disposition: form-data; name=\"" + key + "\";filename=\"" + file.getName() + "\"" + lineEnd);
+        dos.writeBytes("Content-Disposition: form-data; name=\"" + key + "\";filename=\"" + uis.getFilename() + "\"" + lineEnd);
         dos.writeBytes(lineEnd);
 
-        FileInputStream fileInputStream = new FileInputStream(file);
-        bytesAvailable = fileInputStream.available();
+        bytesAvailable = uis.getInputStream().available();
         bufferSize = Math.min(bytesAvailable, maxBufferSize);
         buffer = new byte[bufferSize];
-        bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+        bytesRead = uis.getInputStream().read(buffer, 0, bufferSize);
 
         while (bytesRead > 0) {
             dos.write(buffer, 0, bufferSize);
-            bytesAvailable = fileInputStream.available();
+            bytesAvailable = uis.getInputStream().available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
-            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            bytesRead = uis.getInputStream().read(buffer, 0, bufferSize);
         }
 
         dos.writeBytes(lineEnd);
         dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
-        fileInputStream.close();
+        uis.getInputStream().close();
     }
-
+        
     public int getStatusCode(){
         return statusCode;
     }

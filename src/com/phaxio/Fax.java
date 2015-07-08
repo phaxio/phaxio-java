@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import com.phaxio.exception.PhaxioException;
 import com.phaxio.util.PagedList;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,6 +56,28 @@ public class Fax {
      * @throws PhaxioException
      */
     public static long send(List<String> phoneNumbers, List<File> files, Map<String, Object> options) throws PhaxioException{
+        HashMap<String, InputStream> inputStreamMap = new HashMap();
+        
+        for(File file : files){
+            try {
+                inputStreamMap.put(file.getAbsolutePath(), new FileInputStream(file));
+            }
+            catch (FileNotFoundException e){
+                throw new PhaxioException("Could not open file", e);
+            }
+        }
+        
+        return send(phoneNumbers, inputStreamMap, options);
+    }
+
+    /**
+     * @param phoneNumbers
+     * @param files
+     * @param options
+     * @return long The faxId of the fax being sent
+     * @throws PhaxioException
+     */
+    public static long send(List<String> phoneNumbers, Map<String, InputStream> inputStreamMap, Map<String, Object> options) throws PhaxioException{
         if (options == null){
             options = new HashMap<String,Object>();
         }
@@ -64,10 +88,10 @@ public class Fax {
 	    i++;
         }
 
-        if (files != null){
+        if (inputStreamMap != null){
 	    i = 0;
-            for (File file : files){
-                options.put("filename[" + i + "]", file);
+            for (Map.Entry<String, InputStream> entry : inputStreamMap.entrySet()){
+                options.put("filename[" + i + "]", new UploadInputStream(entry.getValue(), entry.getKey()));
 		i++;
             }
         }
@@ -75,7 +99,6 @@ public class Fax {
         JsonObject json = Phaxio.doRequest("send", options, "POST");
         return json.get("data").getAsJsonObject().get("faxId").getAsLong();
     }
-
 
     public static InputStream getFile(Fax fax, String type) throws PhaxioException {
         return getFile(String.valueOf(fax.getId()), type);

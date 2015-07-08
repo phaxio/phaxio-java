@@ -38,7 +38,7 @@ public class FaxTest extends PhaxioTestAbstract {
         Map<String,Object> options = new HashMap<String,Object>();
         options.put("string_data", "test sending a fax");
 
-        return Fax.send(phoneNumbers, null, options);
+        return Fax.send(phoneNumbers, new ArrayList<File>(), options);
     }
 
 
@@ -85,7 +85,8 @@ public class FaxTest extends PhaxioTestAbstract {
         options.put("batch_delay", 60);
 
         Thread.sleep(2000);
-        Long faxId = Fax.send(phoneNumbers, null, options);
+        
+        Long faxId = Fax.send(phoneNumbers, new ArrayList<File>(), options);
         assertNotNull(faxId);
 
         Thread.sleep(2000);     //gotta sleep here so we dont trigger any rate limiting problems.
