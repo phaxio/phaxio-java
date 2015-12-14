@@ -100,6 +100,33 @@ public class Fax {
         return json.get("data").getAsJsonObject().get("faxId").getAsLong();
     }
 
+    /**
+     * @param Fax fax A fax object of a fax to resend
+     * @return long The faxId of the new fax
+     * @throws PhaxioException
+     */
+    public static long resend(Fax fax) throws PhaxioException{
+        return resend(fax.id);
+    }
+
+    /**
+     * @param long faxId A faxId of a fax to resend
+     * @return long The faxId of the fax being sent
+     * @throws PhaxioException
+     */
+    public static long resend(long faxId) throws PhaxioException{
+        Map<String,Object> options = new HashMap<String,Object>();
+        options.put("id", faxId);
+
+        JsonObject json = Phaxio.doRequest("resendFax", options, "POST");
+        if (json.get("success").getAsBoolean()){
+            return json.get("data").getAsJsonObject().get("faxId").getAsLong();
+        }
+        else {
+            throw new PhaxioException(json.get("message").getAsString());
+        }
+    }
+
     public static InputStream getFile(Fax fax, String type) throws PhaxioException {
         return getFile(String.valueOf(fax.getId()), type);
     }
