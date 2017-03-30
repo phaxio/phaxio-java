@@ -10,3 +10,7 @@ dist/
 manifest.mf
 test/com/phaxio/test/Playarea.java
 test/key.json
+target/
+.settings/
+.classpath
+.project
