@@ -1,5 +1,7 @@
 # Phaxio !!!ALPHA!!!
 
+[![Build Status](https://travis-ci.org/phaxio/phaxio-java.svg?branch=master)](https://travis-ci.org/phaxio/phaxio-java)
+
 Phaxio is the only cloud based fax API designed for developers. This is the Java client library for Phaxio.
 
 ## Getting started
