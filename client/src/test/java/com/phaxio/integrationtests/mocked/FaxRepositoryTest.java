@@ -22,7 +22,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class FaxRepositoryTests {
+public class FaxRepositoryTest {
     private static final int TEST_PORT = 8089;
 
     @Rule

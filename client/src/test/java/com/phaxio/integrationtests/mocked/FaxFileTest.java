@@ -14,7 +14,7 @@ import java.io.IOException;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertArrayEquals;
 
-public class FaxFileTests {
+public class FaxFileTest {
     private static final int TEST_PORT = 8089;
 
     @Rule

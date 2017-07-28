@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 
-public class PhaxioTests {
+public class PhaxioTest {
     private static final int TEST_PORT = 8089;
 
     @Rule

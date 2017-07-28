@@ -16,7 +16,7 @@ import java.util.Date;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 
-public class PhaxCodeRepositoryTests {
+public class PhaxCodeRepositoryTest {
     private static final int TEST_PORT = 8089;
 
     @Rule
@@ -56,7 +56,7 @@ public class PhaxCodeRepositoryTests {
         assertEquals("1234", code.identifier);
         assertEquals("some_stuff", code.metadata);
 
-        DateFormat format = new SimpleDateFormat("");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 
         Date createdAt = format.parse("2015-09-02T11:28:02-0500");
 

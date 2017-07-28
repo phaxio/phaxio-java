@@ -15,7 +15,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class AreaCodeRepositoryTests {
+public class AreaCodeRepositoryTest {
     private static final int TEST_PORT = 8089;
 
     @Rule

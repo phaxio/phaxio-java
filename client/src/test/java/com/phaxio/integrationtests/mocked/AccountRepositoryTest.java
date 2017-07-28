@@ -12,7 +12,7 @@ import java.io.IOException;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 
-public class AccountRepositoryTests {
+public class AccountRepositoryTest {
     private static final int TEST_PORT = 8089;
 
     @Rule

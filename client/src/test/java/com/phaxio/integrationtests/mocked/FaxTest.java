@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
-public class FaxTests {
+public class FaxTest {
     private static final int TEST_PORT = 8089;
 
     @Rule

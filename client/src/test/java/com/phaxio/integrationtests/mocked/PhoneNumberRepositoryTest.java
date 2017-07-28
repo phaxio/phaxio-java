@@ -18,7 +18,7 @@ import java.util.List;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.junit.Assert.assertEquals;
 
-public class PhoneNumberRepositoryTests {
+public class PhoneNumberRepositoryTest {
     private static final int TEST_PORT = 8089;
 
     @Rule

@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
-public class PhoneNumberTests {
+public class PhoneNumberTest {
     private static final int TEST_PORT = 8089;
 
     @Rule

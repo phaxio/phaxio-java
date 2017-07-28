@@ -3,7 +3,6 @@ package com.phaxio.integrationtests.scenarios;
 import com.phaxio.Phaxio;
 import com.phaxio.helpers.Config;
 import com.phaxio.resources.Fax;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -17,8 +16,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@Ignore
-public class FaxRepositoryTests {
+public class FaxRepositoryScenario {
     @Test
     public void createsFax () throws IOException {
         Phaxio phaxio = new Phaxio(Config.get("key"), Config.get("secret"));
