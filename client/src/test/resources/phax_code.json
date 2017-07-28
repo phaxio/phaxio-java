@@ -1,0 +1,5 @@
+﻿{
+  "success": true,
+  "message": "Successful message...",
+  "data":  { "identifier": "1234", "metadata": "some_stuff", "created_at":"2015-09-02T11:28:02.000-05:00" }
+}
