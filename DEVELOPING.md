@@ -10,7 +10,11 @@ This will also tag your git repo with the release number, but not push it to Git
 
 Note that settings.xml in the .m2 folder with override a local settings.xml
 
-Run this command: `mvn release:clean release:prepare release:perform -B -e`
+Run this command to update the version: `mvn versions:set -DnewVersion=<version-id>`
+
+Then release it: `mvn clean deploy`
+
+Note that this is a release so version-id cannot end in -SNAPSHOT (snapshots are volite development releases).
 
 The package will be released to the Sonatype repo and then synced to Maven Central.
 

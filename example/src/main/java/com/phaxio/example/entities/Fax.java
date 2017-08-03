@@ -26,11 +26,8 @@ public class Fax
     @JsonProperty("is_test")
     public boolean isTest;
 
-    @JsonProperty("created_at")
-    public Date createdAt;
-
-    @JsonProperty("caller_id")
-    public String callerId;
+    @JsonProperty("requested_at")
+    public Date requestedAt;
 
     @JsonProperty("from_number")
     public String fromNumber;
@@ -50,8 +47,8 @@ public class Fax
     @JsonProperty("error_id")
     public int errorId;
 
-    @JsonProperty("error_message")
-    public String errorMessage;
+    @JsonProperty("error_code")
+    public String errorCode;
 
     @JsonProperty("completed_at")
     public Date completedAt;

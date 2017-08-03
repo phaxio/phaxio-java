@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Recipient
 {
-    @JsonProperty("phone_number")
+    @JsonProperty("number")
     public String phoneNumber;
 
     @JsonProperty("status")
