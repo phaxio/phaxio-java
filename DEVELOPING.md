@@ -2,7 +2,17 @@
 
 ## Publishing to Maven
 
-TODO: document process
+Add your Sonatype credentials in ~/.m2/settings.xml or client/settings.xml (see client/settings.xml.sample), then run:
+
+mvn release:clean release:prepare release:perform -B -e
+
+This will also tag your git repo with the release number, but not push it to GitHub.
+
+Note that settings.xml in the .m2 folder with override a local settings.xml
+
+Run this command: `mvn release:clean release:prepare release:perform -B -e`
+
+The package will be released to the Sonatype repo and then synced to Maven Central.
 
 ## Testing
 

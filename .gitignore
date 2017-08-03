@@ -30,7 +30,6 @@ hs_err_pid*
 
 pom.xml.releaseBackup
 release.properties
-settings.xml.sample
 target/
 
 # Project specific classes
