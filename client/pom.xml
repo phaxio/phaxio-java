@@ -4,7 +4,7 @@
 
     <groupId>com.phaxio</groupId>
     <artifactId>phaxio-java</artifactId>
-    <version>0.3.4-SNAPSHOT</version>
+    <version>0.3.4</version>
 
     <name>Phaxio Java Client</name>
     <description>The official Phaxio client for the JVM</description>
@@ -37,7 +37,7 @@
         <connection>scm:git:git@github.com:phaxio/phaxio-java.git</connection>
         <developerConnection>scm:git:git@github.com:phaxio/phaxio-java.git</developerConnection>
         <url>git@github.com:phaxio/phaxio-java.git</url>
-    <tag>HEAD</tag>
+        <tag>phaxio-java-0.3.4</tag>
   </scm>
 
     <dependencies>
