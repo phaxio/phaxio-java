@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class SupportedCountriesRepositoryScenario {
+public class SupportedCountriesRepositoryScenario extends RateLimitedScenario {
     @Test
     public void listsCountries () throws IOException {
         Phaxio phaxio = new Phaxio(Config.get("key"), Config.get("secret"));

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class PhoneNumberRepositoryScenario {
+public class PhoneNumberRepositoryScenario extends RateLimitedScenario {
     @Test
     public void listsRetrievesAndReleasesNumbers () throws IOException, InterruptedException {
         Phaxio phaxio = new Phaxio(Config.get("key"), Config.get("secret"));

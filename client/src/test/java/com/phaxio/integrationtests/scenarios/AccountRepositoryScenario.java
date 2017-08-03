@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class AccountRepositoryScenario {
+public class AccountRepositoryScenario extends RateLimitedScenario {
     @Test
     public void getsAccountStatus () throws IOException {
         Phaxio phaxio = new Phaxio(Config.get("key"), Config.get("secret"));

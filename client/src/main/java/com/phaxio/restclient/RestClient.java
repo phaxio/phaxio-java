@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.*;
 
+/**
+ * Internally used REST client. Not part of the public API, subject to change at any time.
+ */
 public class RestClient {
     private static final int TIMEOUT = 30000;
     private final String endpoint;

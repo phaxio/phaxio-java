@@ -16,9 +16,9 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class FaxRepositoryScenario {
+public class FaxRepositoryScenario extends RateLimitedScenario {
     @Test
-    public void createsFax () throws IOException {
+    public void createsFax () throws IOException, InterruptedException {
         Phaxio phaxio = new Phaxio(Config.get("key"), Config.get("secret"));
 
         Map<String, Object> options = new HashMap<String, Object>();
@@ -34,6 +34,8 @@ public class FaxRepositoryScenario {
 
         assertTrue(fax.id != 0);
 
+        Thread.sleep(1000);
+
         Fax retrievedFax = phaxio.fax.retrieve(fax.id);
 
         assertEquals(fax.id, retrievedFax.id);
@@ -48,15 +50,28 @@ public class FaxRepositoryScenario {
 
         assertTrue(threwException);
 
+        // We need to wait longer for this to run
+        Thread.sleep(3000);
+
         fax.resend();
+
+        Thread.sleep(1000);
 
         fax.file().getBytes();
 
+        Thread.sleep(1000);
+
         fax.file().largeJpeg().getBytes();
+
+        Thread.sleep(1000);
 
         fax.file().smallJpeg().getBytes();
 
+        Thread.sleep(1000);
+
         fax.file().delete();
+
+        Thread.sleep(1000);
 
         fax.delete();
     }
@@ -77,8 +92,21 @@ public class FaxRepositoryScenario {
     }
 
     @Test
-    public void list () throws IOException {
+    public void list () throws IOException, InterruptedException {
         Phaxio phaxio = new Phaxio(Config.get("key"), Config.get("secret"));
+
+        Map<String, Object> options = new HashMap<String, Object>();
+
+        options.put("to", "2088675309");
+
+        URL testFileUrl = this.getClass().getResource("/test.pdf");
+        File testFile = new File(testFileUrl.getFile());
+
+        options.put("file", testFile);
+
+        phaxio.fax.create(options);
+
+        Thread.sleep(1000);
 
         Iterable<Fax> faxes = phaxio.fax.list();
 

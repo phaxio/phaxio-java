@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class AreaCodeRepositoryScenario {
+public class AreaCodeRepositoryScenario extends RateLimitedScenario {
     @Test
     public void listsAreaCodes () throws IOException {
         Phaxio phaxio = new Phaxio(Config.get("key"), Config.get("secret"));

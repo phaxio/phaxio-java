@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class PhaxCodeRepositoryScenario {
+public class PhaxCodeRepositoryScenario extends RateLimitedScenario {
     @Test
     public void createPhaxCodeAndRetrievePng () throws IOException, InterruptedException {
         Phaxio phaxio = new Phaxio(Config.get("key"), Config.get("secret"));

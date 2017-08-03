@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.phaxio</groupId>
     <artifactId>phaxio-java</artifactId>
-    <version>0.1.0</version>
+    <version>0.3.4-SNAPSHOT</version>
 
     <name>Phaxio Java Client</name>
     <description>The official Phaxio client for the JVM</description>
     <url>https://github.com/phaxio/phaxio-java</url>
+
+    <developers>
+        <developer>
+            <name>Phaxio Developers</name>
+            <email>support@phaxio.com</email>
+            <organization>Phaxio</organization>
+            <organizationUrl>https://phaxio.com</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>1.6</maven.compiler.source>
@@ -30,7 +37,8 @@
         <connection>scm:git:git@github.com:phaxio/phaxio-java.git</connection>
         <developerConnection>scm:git:git@github.com:phaxio/phaxio-java.git</developerConnection>
         <url>git@github.com:phaxio/phaxio-java.git</url>
-    </scm>
+    <tag>HEAD</tag>
+  </scm>
 
     <dependencies>
         <dependency>
@@ -83,10 +91,22 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <localCheckout>true</localCheckout>
+                    <pushChanges>false</pushChanges>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
