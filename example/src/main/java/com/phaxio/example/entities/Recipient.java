@@ -30,6 +30,6 @@ public class Recipient
     @JsonProperty("error_id")
     public int errorId;
 
-    @JsonProperty("error_message")
-    public String errorMessage;
+    @JsonProperty("error_code")
+    public String errorCode;
 }

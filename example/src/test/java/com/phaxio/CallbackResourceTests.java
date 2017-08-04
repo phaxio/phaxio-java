@@ -8,6 +8,9 @@ import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.*;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -39,8 +42,10 @@ public class CallbackResourceTests {
 
         Response response = target.request().post(
                 Entity.entity(multipartEntity, multipartEntity.getMediaType()));
-        System.out.println(response.getStatus());
-        System.out.println(response.readEntity(String.class));
+
+        assertEquals(200, response.getStatus());
+
+        assertThat(response.readEntity(String.class), containsString("8088675309"));
 
         response.close();
     }

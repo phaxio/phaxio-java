@@ -29,11 +29,14 @@ public class Fax
     @JsonProperty("requested_at")
     public Date requestedAt;
 
+    @JsonProperty("to_number")
+    public String toNumber;
+
     @JsonProperty("from_number")
     public String fromNumber;
 
-    @JsonProperty("to_number")
-    public String toNumber;
+    @JsonProperty("caller_id")
+    public String callerId;
 
     @JsonProperty("recipients")
     public List<Recipient> recipients;
@@ -41,11 +44,11 @@ public class Fax
     @JsonProperty("tags")
     public Map<String, String> tags;
 
-    @JsonProperty("error_type")
-    public String errorType;
-
     @JsonProperty("error_id")
     public int errorId;
+
+    @JsonProperty("error_type")
+    public String errorType;
 
     @JsonProperty("error_code")
     public String errorCode;

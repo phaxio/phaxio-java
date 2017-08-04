@@ -1,36 +1,32 @@
 ﻿{
-    "success":true,
-    "message":"Metadata for fax",
-    "data":{
-        "id":123456,
-        "direction":"sent",
-        "num_pages":3,
-        "status":"success",
-        "is_test":true,
-        "created_at":"2015-09-02T11:28:02.000-05:00",
-        "from_number":"123",
-        "completed_at":"2015-09-02T11:28:54.000-05:00",
-        "caller_id":"Caller",
-        "cost":21,
-        "tags":{
-            "order_id":"1234"
-        },
-        "recipients":[
-            {
-                "phone_number":"+14141234567",
-                "status":"success",
-                "completed_at":"2015-09-02T11:28:54.000-05:00",
-                "error_type":"recipient_error_type",
-                "error_id": 41,
-                "error_message":"recipient_error_message",
-                "retry_count": 3,
-                "bitrate": 14400,
-                "resolution": 8040
-            }
-        ],
-        "to_number":"321",
-        "error_id":42,
-        "error_type":"error_type",
-        "error_message":"error_message"
-    }
+    "id":123456,
+    "direction":"sent",
+    "num_pages":3,
+    "cost":21,
+    "status":"success",
+    "is_test":true,
+    "requested_at":"2015-09-02T11:28:02.000-05:00",
+    "from_number":"8088675309",
+    "to_number":"321",
+    "caller_id": "8088675309",
+    "tags":{
+        "order_id":"1234"
+    },
+    "recipients":[
+        {
+            "number":"+14141234567",
+            "status":"success",
+            "retry_count": 3,
+            "bitrate": 14400,
+            "resolution": 8040,
+            "completed_at":"2015-09-02T11:28:54.000-05:00",
+            "error_id": 41,
+            "error_type":"recipient_error_type",
+            "error_code":"recipient_error_message"
+        }
+    ],
+    "error_id":42,
+    "error_type":"error_type",
+    "error_code":"error_message",
+    "completed_at":"2015-09-02T11:28:54.000-05:00"
 }
