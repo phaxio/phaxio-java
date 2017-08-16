@@ -1,4 +1,4 @@
-# Phaxio !!!ALPHA!!!
+# Phaxio
 
 [![Build Status](https://travis-ci.org/phaxio/phaxio-java.svg?branch=master)](https://travis-ci.org/phaxio/phaxio-java)
 
