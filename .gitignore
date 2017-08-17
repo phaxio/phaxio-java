@@ -33,6 +33,6 @@ release.properties
 target/
 
 # Project specific classes
-Main.java
+client/src/main/java/com/phaxio/Main.java
 testing.properties
 settings.xml

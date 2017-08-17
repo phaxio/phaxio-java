@@ -34,7 +34,7 @@ If you have more than one file, you can pass in a list and Phaxio will concatena
 
     faxParams.put("caller_id", "2125552368");
 
-    var fax = phaxio.fax.create(faxParams);
+    Fax fax = phaxio.fax.create(faxParams);
 
 If you have a bunch of faxes going to one number, you might want to check out [batching](https://www.phaxio.com/docs/api/send/batching/).
 You first specify a batch delay. Then, you send as many faxes as you'd like to the number in question, 
@@ -74,13 +74,13 @@ This returns a List<Fax>.
 
 To retrieve the fax file after you've sent it, call the File method on the Fax instance:
 
-    File file = fax.file();
+    FaxFile file = fax.file();
     
 File is a FaxFile object representing your fax. You can call the Bytes property which returns a byte array of the PDF that you can write to disk or store in a database.
 
 You can also specify which format you'd like using the File property on the Fax instance:
 
-    File thumbnail = fax.file().smallJpeg();
+    FaxFile thumbnail = fax.file().smallJpeg();
     
 Call `smallJpeg()` for a small JPEG, `largeJpeg()` for a large JPEG, or `pdf()` for PDF.
 
@@ -98,7 +98,7 @@ You can cancel a fax:
 
 ### Deleting a fax's files
 
-You can delete a fax:
+You can delete a fax's files:
 
     fax.file().delete();
 
@@ -208,7 +208,7 @@ To get the properties of the newly generated code:
 
 To download the PNG of this newly generated code:
 
-    PhaxCode codeBytes = phaxio.phaxCode.retrieve(codeId).png();
+    byte[] codeBytes = phaxio.phaxCode.retrieve(codeId).png();
 
 ## Misc
 
@@ -224,7 +224,7 @@ This returns a List of Country objects that have pricing and the services availa
 
 So you've written a callback or a webhook you'd like tested. It's simple to have Phaxio send you a fax:
 
-    var fax = phaxio.fax.testRecieveCallback(new File("test-fax.pdf"));
+    Fax fax = phaxio.fax.testRecieveCallback(new File("test-fax.pdf"));
     
 This returns a Fax object. This will call your default account callback. If you've specified a callback
 for an individual number and you'd like to test that callback, you can specify it with the toNumber parameter:
@@ -232,13 +232,13 @@ for an individual number and you'd like to test that callback, you can specify i
     HashMap<String, Object> options = new HashMap<>();
     options.put("to", "8088675309");
 
-    var fax = phaxio.Fax.testRecieveCallback(new File("test-fax.pdf"), options);
+    Fax fax = phaxio.Fax.testRecieveCallback(new File("test-fax.pdf"), options);
 
 You can also fake who the fax is from:
 
     HashMap<String, Object> options = new HashMap<>();
     options.put("from", "2125552368");
 
-    var fax = phaxio.Fax.testRecieveCallback(new File("test-fax.pdf"), options);
+    Fax fax = phaxio.Fax.testRecieveCallback(new File("test-fax.pdf"), options);
 
 &copy; 2016-2017 Phaxio
