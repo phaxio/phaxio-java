@@ -1,44 +1,56 @@
-phaxio-java
-===========
+# Phaxio
 
-Phaxio API Java Client Library
+[![Build Status](https://travis-ci.org/phaxio/phaxio-java.svg?branch=master)](https://travis-ci.org/phaxio/phaxio-java)
 
+Phaxio is the only cloud based fax API designed for developers. This is the Java client library for Phaxio.
 
-Requirements
-===========
-Java 1.5 or later.
+## Getting started
 
-Installation
-============
+First, [sign up](https://console.phaxio.com/signup) if you haven't already.
 
-You'll need to manually install the following JARs:
+Second, go to [api settings](https://console.phaxio.com/apiSettings) and get your key and your secret.
 
-* The Phaxio JAR
-* [Google Gson](http://code.google.com/p/google-gson/) from <https://github.com/google/gson/archive/gson-2.2.4.zip>.
+Third, add this library as a dependency in your pom.xml:
 
-Creating the jar
-================
-1. Clone or download the repository
-2. cd phaxio-java
-3. mkdir lib && cd lib && wget https://github.com/google/gson/archive/gson-2.2.4.zip && unzip google-gson-2.2.4-release.zip
-4. run 'ant jar'
-5. jar can be found in the dist directory
+    <dependency>
+        <groupId>com.phaxio</groupId>
+        <artifactId>phaxio-client</artifactId>
+        <version>1.0</version>
+    </dependency>
 
-Usage
-=====
+Use [this guide](QUICKSTART.md) for basic usage.
 
-    Phaxio.apiKey = "your_api_key";
-    Phaxio.apiSecret = "your_api_secret";
-    
-    Map<String,Object> options = new HashMap<String,Object>();
-    options.put("string_data", "asdf");
+## Migration from previous library version
 
-    List<String> phoneNumbers = new ArrayList<String>();
-    phoneNumbers.add("4141234567");
+This is a complete re-write and starts from scratch in its design. Please see the above documentation about how to use the new library and its calls.
 
-    List<File> files = new ArrayList<File>();
-    files.add(new File("./test/apple.pdf"));
+## Migration from API V1 to V2
 
-    Long faxId = Fax.send(phoneNumbers, files, options);
-    
-    
+This library now uses Phaxio API V2, so these methods have been removed and have no equivalent:
+
+- Phaxcode.attachToPdf was removed
+- HostedDocument was removed
+
+## Errors
+
+Operations that connect to Phaxio will throw an exception if an error is encountered.
+
+RateLimitException happens if you have made too many requests per second.
+InvalidRequestException is throw if the data sent to Phaxio is not correct
+AuthenticationException gets thrown when your credentials are invalid
+NotFoundException is throw when you try to retrieve a resource by ID but it isn't found
+ApiConnectionException occurs when there is a network issue
+ServerException happens if the server is not working
+PhaxioClientException occurs when there's a problem with this library. Do not try to handle this error - report any instances
+to support.
+
+### Rate limiting
+
+The Phaxio API is rate limited. If you make too many requests too quickly, you might receive this error.
+Check the exception message, wait a second, and then try your request again.
+
+## Writing callbacks (webhooks)
+
+Writing a callback to get fax send or receive events is simple. Read this [handy guide](CALLBACKS.md) to get started.
+
+&copy; 2016-2017 Phaxio

@@ -1,16 +1,38 @@
+# Compiled class file
 *.class
 
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
 # Package Files #
+*.jar
 *.war
 *.ear
+*.zip
+*.tar.gz
+*.rar
 
-build/
-lib/
-dist/
-manifest.mf
-test/com/phaxio/test/Playarea.java
-test/key.json
+# Mac-specific files
+.DS_Store
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# IntelliJ Files
+.idea/
+*.iml
+
+pom.xml.releaseBackup
+release.properties
 target/
-.settings/
-.classpath
-.project
+
+# Project specific classes
+client/src/main/java/com/phaxio/Main.java
+testing.properties
+settings.xml

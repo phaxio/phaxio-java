@@ -1,0 +1,35 @@
+﻿{
+    "success":true,
+    "message":"Data contains countries info",
+    "data":[
+        {
+            "name":"Thailand",
+            "alpha2":"TH",
+            "country_code":66,
+            "price_per_page":15,
+            "send_support":"full",
+            "receive_support":"none"
+        },
+        {
+            "name":"Bhutan",
+            "alpha2":"BT",
+            "country_code":975,
+            "price_per_page":30,
+            "send_support":"full",
+            "receive_support":"none"
+        },
+        {
+            "name":"Switzerland",
+            "alpha2":"CH",
+            "country_code":41,
+            "price_per_page":12,
+            "send_support":"full",
+            "receive_support":"none"
+        }
+    ],
+    "paging":{
+        "total":6,
+        "per_page":3,
+        "page":2
+    }
+}
