@@ -59,7 +59,7 @@ public class FaxRepositoryTest {
         verify(postRequestedFor(urlEqualTo("/v2/faxes"))
                 .withHeader("Content-Type", containing("multipart/form-data;"))
                 .withRequestBody(containing("test.pdf"))
-                .withRequestBody(containing("file[]"))
+                .withRequestBody(containing("file"))
                 .withRequestBody(containing("to"))
                 .withRequestBody(containing("2088675309"))
                 .withRequestBody(containing("content_url[]"))
