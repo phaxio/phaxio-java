@@ -5,11 +5,13 @@ import com.phaxio.Phaxio;
 import com.phaxio.entities.Recipient;
 import com.phaxio.helpers.Responses;
 import com.phaxio.resources.Fax;
+import com.phaxio.resources.FileStream;
 import com.phaxio.services.Requests;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.DateFormat;
@@ -29,7 +31,7 @@ public class FaxRepositoryTest {
     public WireMockRule wireMockRule = new WireMockRule(TEST_PORT);
 
     @Test
-    public void createsFax () throws IOException {
+    public void createsFaxWithSingleFile () throws IOException {
         String json = Responses.json("/fax_send.json");
 
         stubFor(post(urlEqualTo("/v2/faxes"))
@@ -59,6 +61,55 @@ public class FaxRepositoryTest {
         verify(postRequestedFor(urlEqualTo("/v2/faxes"))
                 .withHeader("Content-Type", containing("multipart/form-data;"))
                 .withRequestBody(containing("test.pdf"))
+                .withRequestBody(containing("file"))
+                .withRequestBody(containing("to"))
+                .withRequestBody(containing("2088675309"))
+                .withRequestBody(containing("content_url[]"))
+                .withRequestBody(containing("http://google.com"))
+        );
+
+        assertTrue(fax.id == 1234);
+    }
+
+    @Test
+    public void createsFaxWithMultipleFiles () throws IOException {
+        String json = Responses.json("/fax_send.json");
+
+        stubFor(post(urlEqualTo("/v2/faxes"))
+                .willReturn(aResponse()
+                        .withStatus(200)
+                        .withHeader("Content-Type", "application/json; charset=utf-8")
+                        .withBody(json)));
+
+        Phaxio phaxio = new Phaxio("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+
+        Map<String, Object> options = new HashMap<String, Object>();
+
+        options.put("to", "2088675309");
+
+        URL testFileUrl1 = this.getClass().getResource("/test.pdf");
+        URL testFileUrl2 = this.getClass().getResource("/test2.pdf");
+        URL testFileUrl3 = this.getClass().getResource("/test3.pdf");
+        File testFile = new File(testFileUrl1.getFile());
+
+        File testFile3 = new File(testFileUrl3.getFile());
+        FileStream fileStream = new FileStream(new FileInputStream(testFile3), testFile3.getName());
+        Collection<Object> files = Arrays.asList(testFile, testFileUrl2.getFile(), fileStream);
+
+        options.put("file[]", files);
+
+        ArrayList<String> urls = new ArrayList<String>();
+        urls.add("http://google.com");
+
+        options.put("content_url[]", urls);
+
+        Fax fax = phaxio.fax.create(options);
+
+        verify(postRequestedFor(urlEqualTo("/v2/faxes"))
+                .withHeader("Content-Type", containing("multipart/form-data;"))
+                .withRequestBody(containing("test.pdf"))
+                .withRequestBody(containing("test2.pdf"))
+                .withRequestBody(containing("test3.pdf"))
                 .withRequestBody(containing("file[]"))
                 .withRequestBody(containing("to"))
                 .withRequestBody(containing("2088675309"))
