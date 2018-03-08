@@ -5,7 +5,7 @@ import com.phaxio.Phaxio;
 import com.phaxio.entities.Recipient;
 import com.phaxio.helpers.Responses;
 import com.phaxio.resources.Fax;
-import com.phaxio.resources.FileStream;
+import com.phaxio.restclient.entities.FileStream;
 import com.phaxio.services.Requests;
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package com.phaxio.repositories;
 
-import com.phaxio.resources.FileStream;
+import com.phaxio.restclient.entities.FileStream;
 import com.phaxio.services.Requests;
 import com.phaxio.resources.Fax;
 import com.phaxio.restclient.entities.RestRequest;

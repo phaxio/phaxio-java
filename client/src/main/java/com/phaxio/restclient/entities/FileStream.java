@@ -1,8 +1,6 @@
-package com.phaxio.resources;
-
+package com.phaxio.restclient.entities;
 
 import java.io.InputStream;
-
 
 public class FileStream {
   private final InputStream inputStream;
