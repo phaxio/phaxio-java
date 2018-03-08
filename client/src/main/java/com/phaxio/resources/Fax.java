@@ -1,5 +1,6 @@
 package com.phaxio.resources;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.phaxio.services.Requests;
 import com.phaxio.entities.Recipient;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Fax
 {
     private Requests client;

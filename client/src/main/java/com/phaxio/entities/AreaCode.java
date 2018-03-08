@@ -1,10 +1,12 @@
 package com.phaxio.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the area codes where you can purchase numbers.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AreaCode
 {
     @JsonProperty("country_code")

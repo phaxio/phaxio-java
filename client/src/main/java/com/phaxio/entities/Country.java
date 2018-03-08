@@ -1,10 +1,12 @@
 package com.phaxio.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the state of Phaxio support for a country.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Country
 {
     @JsonProperty("name")

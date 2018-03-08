@@ -1,0 +1,9 @@
+{
+  "name":"United States",
+  "alpha2":"US",
+  "country_code":1,
+  "price_per_page":7,
+  "send_support":"full",
+  "receive_support":"fullest",
+  "extra": "extra"
+}

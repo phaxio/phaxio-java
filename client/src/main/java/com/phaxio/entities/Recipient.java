@@ -1,5 +1,6 @@
 package com.phaxio.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.Date;
 /**
  * A fax recipient
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Recipient
 {
     @JsonProperty("phone_number")
