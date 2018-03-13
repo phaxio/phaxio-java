@@ -1,5 +1,6 @@
 package com.phaxio.resources;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.phaxio.services.Requests;
 import com.phaxio.restclient.entities.RestRequest;
@@ -9,6 +10,7 @@ import java.util.Date;
 /**
  * A phone number that you can use to send faxes.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PhoneNumber
 {
     private Requests client;

@@ -3,7 +3,6 @@ package com.phaxio.services;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.phaxio.Phaxio;
 import com.phaxio.entities.Paging;
 import com.phaxio.exceptions.*;
 import com.phaxio.restclient.RestClient;
@@ -190,7 +189,7 @@ public class Requests {
     }
 
     private String getMessage(RestResponse response) throws IOException {
-        if (response.getContentType().equals("application/json")) {
+        if (response.getContentType().startsWith("application/json")) {
             return response.toJson().get("message").asText();
         } else {
             return "";

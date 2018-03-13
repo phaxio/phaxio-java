@@ -1,0 +1,12 @@
+﻿{
+    "balance":5050,
+    "extra": "extra",
+    "faxes_today": {
+        "sent": 1,
+        "received": 2
+    },
+    "faxes_this_month": {
+        "sent": 15,
+        "received": 7
+    }
+}

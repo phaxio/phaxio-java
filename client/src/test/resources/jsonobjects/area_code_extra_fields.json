@@ -1,0 +1,9 @@
+{
+  "country_code":1,
+  "area_code":203,
+  "extra": "extra",
+  "city":"Bridgeport, Danbury, Meriden",
+  "state":"Connecticut",
+  "country":"United States",
+  "toll_free":false
+}

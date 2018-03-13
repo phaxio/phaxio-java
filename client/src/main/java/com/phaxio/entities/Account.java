@@ -1,10 +1,12 @@
 package com.phaxio.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * This represents a Phaxio account
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Account
 {
     @JsonProperty("balance")

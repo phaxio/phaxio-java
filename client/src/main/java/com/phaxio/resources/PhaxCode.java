@@ -1,6 +1,7 @@
 package com.phaxio.resources;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.phaxio.services.Requests;
 import com.phaxio.restclient.RestClient;
@@ -11,6 +12,7 @@ import java.util.Date;
 /**
  * A PhaxCode is a barcode that Phaxio generates, which can be embedded with metadata.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PhaxCode
 {
     private Requests client;
