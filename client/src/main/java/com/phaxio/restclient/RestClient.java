@@ -14,10 +14,16 @@ public class RestClient {
     private static final int TIMEOUT = 30000;
     private final String endpoint;
     private BasicAuthentication auth;
-
-    public RestClient(String endpoint) {
+    final private  Proxy proxy;
+    
+    public RestClient(String endpoint,Proxy proxy) {
         this.endpoint = endpoint;
+        this.proxy = proxy;
     }
+    
+//    public RestClient(String endpoint) {
+//       this(endpoint,null);
+//    }
 
     public void setAuthentication(BasicAuthentication auth) {
         this.auth = auth;
@@ -36,7 +42,7 @@ public class RestClient {
             }
 
             URL url = new URL(endpoint + request.getResource() + queryString);
-            conn = (HttpURLConnection)url.openConnection();
+            conn = (HttpURLConnection)openConnection(url);
             conn.setUseCaches(false);
             conn.setAllowUserInteraction(false);
             conn.setConnectTimeout(TIMEOUT);
@@ -130,6 +136,17 @@ public class RestClient {
         }
 
         return response;
+    }
+    
+    private URLConnection openConnection(URL url) throws IOException {
+    	URLConnection toReturn;
+    	if(proxy!=null) {
+    		toReturn=url.openConnection(proxy);
+    	} else {
+    		toReturn=url.openConnection();
+    	}
+    	
+    	return toReturn;
     }
 
     private String getQueryString(RestRequest request) {

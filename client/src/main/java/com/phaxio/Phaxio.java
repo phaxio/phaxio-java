@@ -1,6 +1,8 @@
 package com.phaxio;
 
 
+import java.net.Proxy;
+
 import com.phaxio.repositories.*;
 import com.phaxio.services.Requests;
 
@@ -12,11 +14,19 @@ public class Phaxio {
     private static final int PHAXIO_PORT = 443;
 
     public Phaxio(String key, String secret) {
-        this(key, secret, PHAXIO_ENDPOINT, PHAXIO_PORT);
+    	this(key, secret, PHAXIO_ENDPOINT, PHAXIO_PORT,null);
+    }
+    
+    public Phaxio(String key, String secret,Proxy proxy) {
+        this(key, secret, PHAXIO_ENDPOINT, PHAXIO_PORT,proxy);
     }
 
     public Phaxio(String key, String secret, String endpoint, int port) {
-        Requests requests = new Requests(key, secret, endpoint, port);
+    	this(key,secret,endpoint,port,null);
+    }
+    
+    private Phaxio(String key, String secret, String endpoint, int port,Proxy proxy) {
+        Requests requests = new Requests(key, secret, endpoint, port,proxy);
 
         fax = new FaxRepository(requests);
         publicInfo = new PublicRepository(requests);
