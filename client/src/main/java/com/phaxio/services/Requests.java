@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.net.Proxy;
 import java.util.*;
 
 public class Requests {
@@ -27,12 +28,16 @@ public class Requests {
     private final RestClient client;
 
     public Requests(String key, String secret, String endpoint, int port) {
+    	this(key,secret,endpoint,port,null);
+    }
+    
+    public Requests(String key, String secret, String endpoint, int port,Proxy proxy) {
         this.secret = secret;
         this.key = key;
 
         String endpointWithPort = String.format(endpoint, port);
 
-        client = new RestClient(endpointWithPort);
+        client = new RestClient(endpointWithPort,proxy);
     }
 
     public <T> T get(RestRequest request, Class clazz) {
