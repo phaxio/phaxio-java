@@ -20,6 +20,13 @@ Third, add this library as a dependency in your pom.xml:
 
 Check [here](https://mvnrepository.com/artifact/com.phaxio/phaxio-java) to make sure you're using the latest version. Use [this guide](QUICKSTART.md) for basic usage.
 
+## Proxy support
+
+You can use an HTTP proxy with this library by setting system properies:
+
+    System.setProperty("http.proxyHost", "my-proxy-host");
+    System.setProperty("http.proxyPort", "my-proxy-port");
+
 ## Migration from previous library version
 
 This is a complete re-write and starts from scratch in its design. Please see the above documentation about how to use the new library and its calls.
