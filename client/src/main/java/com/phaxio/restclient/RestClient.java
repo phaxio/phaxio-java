@@ -21,10 +21,6 @@ public class RestClient {
         this.proxy = proxy;
     }
     
-//    public RestClient(String endpoint) {
-//       this(endpoint,null);
-//    }
-
     public void setAuthentication(BasicAuthentication auth) {
         this.auth = auth;
     }
