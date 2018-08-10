@@ -35,9 +35,6 @@ public class CallbackResourceTests {
 
         MultiPart multipartEntity = new FormDataMultiPart()
                 .field("fax", faxJson, MediaType.APPLICATION_JSON_TYPE)
-                .field("success", "true", MediaType.TEXT_PLAIN_TYPE)
-                .field("is_test", "false", MediaType.TEXT_PLAIN_TYPE)
-                .field("direction", "received", MediaType.TEXT_PLAIN_TYPE)
                 .bodyPart(filePart);
 
         Response response = target.request().post(

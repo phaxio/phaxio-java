@@ -3,6 +3,7 @@ package com.phaxio.integrationtests.mocked;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.phaxio.Phaxio;
 import com.phaxio.fixtures.BinaryFixtures;
+import com.phaxio.helpers.Auth;
 import com.phaxio.resources.PhaxCode;
 import com.phaxio.services.Requests;
 import org.junit.Rule;
@@ -23,13 +24,14 @@ public class PhaxCodeTest {
     public void retrievePhaxCodePng () throws IOException {
         byte[] expectedBytes = BinaryFixtures.getTestPhaxCode();
 
-        stubFor(get(urlEqualTo("/v2/phax_codes/1234.png?api_secret=SECRET&api_key=KEY"))
+        stubFor(get(urlEqualTo("/ver/phax_codes/1234.png"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/octet")
                         .withBody(expectedBytes)));
 
-        Requests client = new Requests("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Requests client = new Requests(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         PhaxCode code = new PhaxCode();
 
@@ -45,13 +47,14 @@ public class PhaxCodeTest {
     public void retrieveDefaultPhaxCodePng () throws IOException {
         byte[] expectedBytes = BinaryFixtures.getTestPhaxCode();
 
-        stubFor(get(urlEqualTo("/v2/phax_code.png?api_secret=SECRET&api_key=KEY"))
+        stubFor(get(urlEqualTo("/ver/phax_code.png"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/octet")
                         .withBody(expectedBytes)));
 
-        Requests client = new Requests("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Requests client = new Requests(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         PhaxCode code = new PhaxCode();
 

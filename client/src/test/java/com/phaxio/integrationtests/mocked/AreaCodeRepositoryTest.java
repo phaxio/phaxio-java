@@ -3,6 +3,7 @@ package com.phaxio.integrationtests.mocked;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.phaxio.Phaxio;
 import com.phaxio.entities.AreaCode;
+import com.phaxio.helpers.Auth;
 import com.phaxio.helpers.Responses;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,13 +26,14 @@ public class AreaCodeRepositoryTest {
     public void listsAreaCodes () throws IOException {
         String json = Responses.json("/list_area_codes.json");
 
-        stubFor(get(urlEqualTo("/v2/public/area_codes?api_secret=SECRET&api_key=KEY"))
+        stubFor(get(urlEqualTo("/ver/public/area_codes"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Phaxio phaxio = new Phaxio("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Phaxio phaxio = new Phaxio(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Iterable<AreaCode> codes = phaxio.publicInfo.areaCode.list();
 

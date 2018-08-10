@@ -2,7 +2,9 @@ package com.phaxio.integrationtests.mocked;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.phaxio.Phaxio;
+import com.phaxio.entities.Barcode;
 import com.phaxio.entities.Recipient;
+import com.phaxio.helpers.Auth;
 import com.phaxio.helpers.Responses;
 import com.phaxio.resources.Fax;
 import com.phaxio.restclient.entities.FileStream;
@@ -21,6 +23,7 @@ import java.util.*;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -34,13 +37,14 @@ public class FaxRepositoryTest {
     public void createsFaxWithSingleFile () throws IOException {
         String json = Responses.json("/fax_send.json");
 
-        stubFor(post(urlEqualTo("/v2/faxes"))
+        stubFor(post(urlEqualTo("/ver/faxes"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Phaxio phaxio = new Phaxio("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Phaxio phaxio = new Phaxio(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Map<String, Object> options = new HashMap<String, Object>();
 
@@ -58,7 +62,7 @@ public class FaxRepositoryTest {
 
         Fax fax = phaxio.fax.create(options);
 
-        verify(postRequestedFor(urlEqualTo("/v2/faxes"))
+        verify(postRequestedFor(urlEqualTo("/ver/faxes"))
                 .withHeader("Content-Type", containing("multipart/form-data;"))
                 .withRequestBody(containing("test.pdf"))
                 .withRequestBody(containing("file"))
@@ -75,13 +79,14 @@ public class FaxRepositoryTest {
     public void createsFaxWithMultipleFiles () throws IOException {
         String json = Responses.json("/fax_send.json");
 
-        stubFor(post(urlEqualTo("/v2/faxes"))
+        stubFor(post(urlEqualTo("/ver/faxes"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Phaxio phaxio = new Phaxio("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Phaxio phaxio = new Phaxio(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Map<String, Object> options = new HashMap<String, Object>();
 
@@ -105,7 +110,7 @@ public class FaxRepositoryTest {
 
         Fax fax = phaxio.fax.create(options);
 
-        verify(postRequestedFor(urlEqualTo("/v2/faxes"))
+        verify(postRequestedFor(urlEqualTo("/ver/faxes"))
                 .withHeader("Content-Type", containing("multipart/form-data;"))
                 .withRequestBody(containing("test.pdf"))
                 .withRequestBody(containing("test2.pdf"))
@@ -124,13 +129,14 @@ public class FaxRepositoryTest {
     public void retrievesFax () throws IOException, ParseException {
         String json = Responses.json("/fax_info.json");
 
-        stubFor(get(urlEqualTo("/v2/faxes/1?api_secret=SECRET&api_key=KEY"))
+        stubFor(get(urlEqualTo("/ver/faxes/1"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Phaxio phaxio = new Phaxio("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Phaxio phaxio = new Phaxio(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Fax fax = phaxio.fax.retrieve(1);
 
@@ -140,6 +146,15 @@ public class FaxRepositoryTest {
         Date completedAt = format.parse("2015-09-02T11:28:54-0500");
 
         assertEquals(123456, fax.id);
+        assertEquals("Alice", fax.callerName);
+
+        Barcode barcode = fax.barcodes.get(0);
+        assertEquals("barcode-type-1", barcode.type);
+        assertEquals(1, barcode.page);
+        assertEquals("barcode-value-1", barcode.value);
+        assertEquals("phax-code-id-1", barcode.identifier);
+        assertEquals("phax-code-metadata-1", barcode.metadata);
+
         assertEquals("sent", fax.direction);
         assertEquals(3, fax.pageCount);
         assertEquals("success", fax.status);
@@ -172,13 +187,13 @@ public class FaxRepositoryTest {
     public void testRecieveCallback () throws IOException {
         String json = Responses.json("/generic_success.json");
 
-        stubFor(post(urlEqualTo("/v2/faxes"))
+        stubFor(post(urlEqualTo("/ver/faxes"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Phaxio phaxio = new Phaxio("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Phaxio phaxio = new Phaxio(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Map<String, Object> options = new HashMap<String, Object>();
 
@@ -190,7 +205,7 @@ public class FaxRepositoryTest {
 
         phaxio.fax.testReceiveCallback(options);
 
-        verify(postRequestedFor(urlEqualTo("/v2/faxes"))
+        verify(postRequestedFor(urlEqualTo("/ver/faxes"))
                 .withHeader("Content-Type", containing("multipart/form-data;"))
                 .withRequestBody(containing("test.pdf"))
                 .withRequestBody(containing("file"))
@@ -205,13 +220,14 @@ public class FaxRepositoryTest {
     public void deletesFax () throws IOException {
         String json = Responses.json("/generic_success.json");
 
-        stubFor(delete(urlEqualTo("/v2/faxes/1?api_secret=SECRET&api_key=KEY"))
+        stubFor(delete(urlEqualTo("/ver/faxes/1"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Requests client = new Requests("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Requests client = new Requests(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Fax fax = new Fax();
         fax.id = 1;
@@ -219,20 +235,21 @@ public class FaxRepositoryTest {
 
         fax.delete();
 
-        verify(deleteRequestedFor(urlEqualTo("/v2/faxes/1?api_secret=SECRET&api_key=KEY")));
+        verify(deleteRequestedFor(urlEqualTo("/ver/faxes/1")));
     }
 
     @Test
     public void listsFax () throws IOException {
         String json = Responses.json("/fax_list.json");
 
-        stubFor(get(urlEqualTo("/v2/faxes?api_secret=SECRET&api_key=KEY"))
+        stubFor(get(urlEqualTo("/ver/faxes"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Phaxio phaxio = new Phaxio("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Phaxio phaxio = new Phaxio(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Iterable<Fax> faxes = phaxio.fax.list();
 

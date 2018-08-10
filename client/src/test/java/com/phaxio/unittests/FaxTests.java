@@ -1,6 +1,7 @@
 package com.phaxio.unittests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.phaxio.entities.Barcode;
 import com.phaxio.entities.Recipient;
 import com.phaxio.helpers.Responses;
 import com.phaxio.resources.Fax;
@@ -12,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -30,6 +32,15 @@ public class FaxTests {
         Date completedAt = format.parse("2015-09-02T11:28:54-0500");
 
         assertEquals(123456, fax.id);
+        assertEquals("Alice", fax.callerName);
+
+        Barcode barcode = fax.barcodes.get(0);
+        assertEquals("barcode-type-1", barcode.type);
+        assertEquals(1, barcode.page);
+        assertEquals("barcode-value-1", barcode.value);
+        assertEquals("phax-code-id-1", barcode.identifier);
+        assertEquals("phax-code-metadata-1", barcode.metadata);
+
         assertEquals("sent", fax.direction);
         assertEquals(3, fax.pageCount);
         assertEquals("success", fax.status);

@@ -9,7 +9,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.io.InputStream;
 
 @Path("callbacks")
@@ -19,11 +18,8 @@ public class Callbacks {
     @Consumes({MediaType.MULTIPART_FORM_DATA})
     @Produces(MediaType.APPLICATION_JSON)
     public Fax receive(@FormDataParam("filename") InputStream fileInputStream,
-                            @FormDataParam("filename") FormDataContentDisposition disposition,
-                            @FormDataParam("success") boolean success,
-                            @FormDataParam("is_test") boolean isTest,
-                            @FormDataParam("direction") String direction,
-                            @FormDataParam("fax") Fax fax) throws Exception {
+                       @FormDataParam("filename") FormDataContentDisposition disposition,
+                       @FormDataParam("fax") Fax fax) throws Exception {
 
         System.out.println("Id: " + fax.id);
 

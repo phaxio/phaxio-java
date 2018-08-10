@@ -1,6 +1,7 @@
 package com.phaxio.integrationtests.mocked;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import com.phaxio.helpers.Auth;
 import com.phaxio.helpers.Responses;
 import com.phaxio.resources.PhoneNumber;
 import com.phaxio.services.Requests;
@@ -21,13 +22,14 @@ public class PhoneNumberTest {
     public void deletesFax () throws IOException {
         String json = Responses.json("/generic_success.json");
 
-        stubFor(delete(urlEqualTo("/v2/phone_numbers/8088675308?api_secret=SECRET&api_key=KEY"))
+        stubFor(delete(urlEqualTo("/ver/phone_numbers/8088675308"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Requests client = new Requests("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Requests client = new Requests(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         PhoneNumber number = new PhoneNumber();
         number.number = "8088675308";
@@ -35,6 +37,7 @@ public class PhoneNumberTest {
 
         number.release();
 
-        verify(deleteRequestedFor(urlEqualTo("/v2/phone_numbers/8088675308?api_secret=SECRET&api_key=KEY")));
+        verify(deleteRequestedFor(urlEqualTo("/ver/phone_numbers/8088675308"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER));
     }
 }

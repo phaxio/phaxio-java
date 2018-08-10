@@ -13,15 +13,15 @@ import java.net.*;
 public class RestClient {
     private static final int TIMEOUT = 30000;
     private final String endpoint;
-    private BasicAuthentication auth;
+    private BasicAuthorization auth;
     final private  Proxy proxy;
     
-    public RestClient(String endpoint,Proxy proxy) {
+    public RestClient(String endpoint, Proxy proxy) {
         this.endpoint = endpoint;
         this.proxy = proxy;
     }
     
-    public void setAuthentication(BasicAuthentication auth) {
+    public void setAuthorization(BasicAuthorization auth) {
         this.auth = auth;
     }
 
@@ -101,7 +101,7 @@ public class RestClient {
                         dos.writeBytes("--\r\n");
                         dos.flush();
                         dos.close();
-                    } else {
+                    } else if (!request.parameters.isEmpty()) {
                         byte[] body = getQueryString(request).substring(1).getBytes("UTF-8");
 
                         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -113,6 +113,8 @@ public class RestClient {
                         dos.write(body);
                         dos.flush();
                         dos.close();
+                    } else {
+                        conn.setRequestProperty("Content-Length", "0");
                     }
 
                     break;
