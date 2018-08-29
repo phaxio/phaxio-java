@@ -1,10 +1,10 @@
 package com.phaxio.restclient;
 
-public class BasicAuthentication {
+public class BasicAuthorization {
     public final String username;
     public final String password;
 
-    public BasicAuthentication(String username, String password) {
+    public BasicAuthorization(String username, String password) {
         this.username = username;
         this.password = password;
     }

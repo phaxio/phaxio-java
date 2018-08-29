@@ -11,6 +11,12 @@ public class Fax
     @JsonProperty("id")
     public int id;
 
+    @JsonProperty("caller_name")
+    public String callerName;
+
+    @JsonProperty("barcodes")
+    public List<Barcode> barcodes;
+
     @JsonProperty("direction")
     public String direction;
 

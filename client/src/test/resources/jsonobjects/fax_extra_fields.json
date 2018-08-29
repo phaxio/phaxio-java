@@ -1,6 +1,14 @@
 {
   "id":123456,
   "extra": "extra",
+  "barcodes": [{
+    "type": "barcode-type-1",
+    "page": 1,
+    "value" : "barcode-value-1",
+    "identifier": "phax-code-id-1",
+    "metadata": "phax-code-metadata-1"
+  }],
+  "caller_name": "Alice",
   "direction":"sent",
   "num_pages":3,
   "status":"success",

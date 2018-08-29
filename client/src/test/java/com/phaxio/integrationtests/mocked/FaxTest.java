@@ -2,6 +2,7 @@ package com.phaxio.integrationtests.mocked;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.phaxio.Phaxio;
+ import com.phaxio.helpers.Auth;
 import com.phaxio.helpers.Responses;
 import com.phaxio.resources.Fax;
 import com.phaxio.services.Requests;
@@ -22,13 +23,14 @@ public class FaxTest {
     public void deletesFax () throws IOException {
         String json = Responses.json("/generic_success.json");
 
-        stubFor(delete(urlEqualTo("/v2/faxes/1?api_secret=SECRET&api_key=KEY"))
+        stubFor(delete(urlEqualTo("/ver/faxes/1"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER)
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Requests client = new Requests("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Requests client = new Requests(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Fax fax = new Fax();
         fax.id = 1;
@@ -36,20 +38,21 @@ public class FaxTest {
 
         fax.delete();
 
-        verify(deleteRequestedFor(urlEqualTo("/v2/faxes/1?api_secret=SECRET&api_key=KEY")));
+        verify(deleteRequestedFor(urlEqualTo("/ver/faxes/1"))
+                .withHeader("Authorization", Auth.VALID_AUTH_MATCHER));
     }
 
     @Test
     public void cancelsFax () throws IOException {
         String json = Responses.json("/generic_success.json");
 
-        stubFor(post(urlEqualTo("/v2/faxes/1/cancel"))
+        stubFor(post(urlEqualTo("/ver/faxes/1/cancel"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Requests client = new Requests("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Requests client = new Requests(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Fax fax = new Fax();
         fax.id = 1;
@@ -57,20 +60,20 @@ public class FaxTest {
 
         fax.cancel();
 
-        verify(postRequestedFor(urlEqualTo("/v2/faxes/1/cancel")));
+        verify(postRequestedFor(urlEqualTo("/ver/faxes/1/cancel")));
     }
 
     @Test
     public void resendsFax () throws IOException {
         String json = Responses.json("/generic_success.json");
 
-        stubFor(post(urlEqualTo("/v2/faxes/1/resend"))
+        stubFor(post(urlEqualTo("/ver/faxes/1/resend"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Requests client = new Requests("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Requests client = new Requests(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Fax fax = new Fax();
         fax.id = 1;
@@ -78,20 +81,20 @@ public class FaxTest {
 
         fax.resend();
 
-        verify(postRequestedFor(urlEqualTo("/v2/faxes/1/resend")));
+        verify(postRequestedFor(urlEqualTo("/ver/faxes/1/resend")));
     }
 
     @Test
     public void resendsFaxWithCallback () throws IOException {
         String json = Responses.json("/generic_success.json");
 
-        stubFor(post(urlEqualTo("/v2/faxes/1/resend"))
+        stubFor(post(urlEqualTo("/ver/faxes/1/resend"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json; charset=utf-8")
                         .withBody(json)));
 
-        Requests client = new Requests("KEY", "SECRET", "http://localhost:%s/v2/", TEST_PORT);
+        Requests client = new Requests(Auth.VALID_KEY, Auth.VALID_SECRET, "http://localhost:%s/ver/", TEST_PORT);
 
         Fax fax = new Fax();
         fax.id = 1;
@@ -99,7 +102,7 @@ public class FaxTest {
 
         fax.resend("google.com");
 
-        verify(postRequestedFor(urlEqualTo("/v2/faxes/1/resend"))
+        verify(postRequestedFor(urlEqualTo("/ver/faxes/1/resend"))
                 .withRequestBody(containing("google.com")));
     }
 }

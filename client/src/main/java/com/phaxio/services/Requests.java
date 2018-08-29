@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.phaxio.entities.Paging;
 import com.phaxio.exceptions.*;
+import com.phaxio.restclient.BasicAuthorization;
 import com.phaxio.restclient.RestClient;
 import com.phaxio.restclient.entities.Method;
 import com.phaxio.restclient.entities.RestRequest;
@@ -19,25 +20,17 @@ import java.net.Proxy;
 import java.util.*;
 
 public class Requests {
-
-    private static final String KEY_PARAMETER = "api_key";
-    private static final String SECRET_PARAMETER = "api_secret";
-
-    private final String key;
-    private final String secret;
     private final RestClient client;
 
     public Requests(String key, String secret, String endpoint, int port) {
-    	this(key,secret,endpoint,port,null);
+    	this(key, secret, endpoint, port, null);
     }
     
-    public Requests(String key, String secret, String endpoint, int port,Proxy proxy) {
-        this.secret = secret;
-        this.key = key;
-
+    public Requests(String key, String secret, String endpoint, int port, Proxy proxy) {
         String endpointWithPort = String.format(endpoint, port);
 
-        client = new RestClient(endpointWithPort,proxy);
+        client = new RestClient(endpointWithPort, proxy);
+        client.setAuthorization(new BasicAuthorization(key, secret));
     }
 
     public <T> T get(RestRequest request, Class clazz) {
@@ -161,9 +154,6 @@ public class Requests {
     }
 
     private RestResponse execute(RestRequest request) {
-        request.addOrReplaceParameter(SECRET_PARAMETER, secret);
-        request.addOrReplaceParameter(KEY_PARAMETER, key);
-
         RestResponse response = client.execute(request);
 
         // Check connection errors

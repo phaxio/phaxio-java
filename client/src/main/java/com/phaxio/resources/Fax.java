@@ -3,6 +3,7 @@ package com.phaxio.resources;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.phaxio.services.Requests;
+import com.phaxio.entities.Barcode;
 import com.phaxio.entities.Recipient;
 import com.phaxio.restclient.entities.RestRequest;
 
@@ -40,9 +41,6 @@ public class Fax
     @JsonProperty("id")
     public int id;
 
-    @JsonProperty("direction")
-    public String direction;
-
     public int getId() {
         return id;
     }
@@ -50,6 +48,15 @@ public class Fax
     public void setId(int id) {
         this.id = id;
     }
+
+    @JsonProperty("direction")
+    public String direction;
+
+    @JsonProperty("barcodes")
+    public List<Barcode> barcodes;
+
+    @JsonProperty("caller_name")
+    public String callerName;
 
     @JsonProperty("num_pages")
     public int pageCount;
