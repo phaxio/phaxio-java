@@ -14,8 +14,8 @@ Third, add this library as a dependency in your pom.xml:
 
     <dependency>
         <groupId>com.phaxio</groupId>
-        <artifactId>phaxio-client</artifactId>
-        <version>0.3.4</version>
+        <artifactId>phaxio-java</artifactId>
+        <version>0.4.1</version>
     </dependency>
 
 Check [here](https://mvnrepository.com/artifact/com.phaxio/phaxio-java) to make sure you're using the latest version. Use [this guide](QUICKSTART.md) for basic usage.
