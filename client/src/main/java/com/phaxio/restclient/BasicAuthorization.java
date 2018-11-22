@@ -1,5 +1,7 @@
 package com.phaxio.restclient;
 
+import org.apache.commons.codec.binary.Base64;
+
 public class BasicAuthorization {
     public final String username;
     public final String password;
@@ -11,6 +13,6 @@ public class BasicAuthorization {
 
     public String toHeader () {
         String authstring = username + ":" + password;
-        return "Basic " + javax.xml.bind.DatatypeConverter.printBase64Binary(authstring.getBytes());
+        return "Basic " + Base64.encodeBase64String(authstring.getBytes());
     }
 }
