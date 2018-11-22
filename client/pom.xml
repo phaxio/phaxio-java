@@ -4,7 +4,7 @@
 
     <groupId>com.phaxio</groupId>
     <artifactId>phaxio-java</artifactId>
-    <version>0.4.2</version>
+    <version>0.4.3</version>
 
     <name>Phaxio Java Client</name>
     <description>The official Phaxio client for the JVM</description>
