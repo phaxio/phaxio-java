@@ -86,7 +86,7 @@ public class FaxRepositoryScenario extends RateLimitedScenario {
         File testFile = new File(testFileUrl.getFile());
 
         options.put("file", testFile);
-        options.put("to", "2088675309");
+        options.put("to_number", "2088675309");
 
         phaxio.fax.testReceiveCallback(options);
     }
@@ -106,7 +106,7 @@ public class FaxRepositoryScenario extends RateLimitedScenario {
 
         phaxio.fax.create(options);
 
-        Thread.sleep(1000);
+        Thread.sleep(3000);
 
         Iterable<Fax> faxes = phaxio.fax.list();
 
@@ -116,6 +116,6 @@ public class FaxRepositoryScenario extends RateLimitedScenario {
             faxList.add(fax);
         }
 
-        assertTrue(faxList.size() > 1);
+        assertTrue(faxList.size() > 0);
     }
 }

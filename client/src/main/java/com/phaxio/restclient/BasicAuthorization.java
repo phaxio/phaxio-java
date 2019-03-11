@@ -1,6 +1,7 @@
 package com.phaxio.restclient;
 
-import org.apache.commons.codec.binary.Base64;
+import java.io.UnsupportedEncodingException;
+import com.google.common.io.BaseEncoding;
 
 public class BasicAuthorization {
     public final String username;
@@ -13,6 +14,12 @@ public class BasicAuthorization {
 
     public String toHeader () {
         String authstring = username + ":" + password;
-        return "Basic " + Base64.encodeBase64String(authstring.getBytes());
+        String encodedString = "";
+
+        try {
+            encodedString = BaseEncoding.base64().encode(authstring.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException exception) { }
+
+        return "Basic " + encodedString;
     }
 }

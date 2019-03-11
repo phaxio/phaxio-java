@@ -2,10 +2,16 @@ package com.phaxio.restclient;
 
 import com.phaxio.restclient.entities.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.OutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.net.*;
+
+import java.io.File;
+import com.google.common.io.Files;
 
 /**
  * Internally used REST client. Not part of the public API, subject to change at any time.
@@ -69,16 +75,16 @@ public class RestClient {
                         String boundary = "--------------------------------" + System.currentTimeMillis();
                         conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
 
-                        DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
                         for (Parameter param : request.parameters) {
-                            dos.writeBytes("--" + boundary + "\r\n");
-                            dos.writeBytes(String.format("Content-Disposition: form-data; name=\"%s\"\r\n", param.getName()));
-                            dos.writeBytes("\r\n");
-                            dos.writeBytes(param.getValue().toString());
-                            dos.writeBytes("\r\n");
-                            dos.writeBytes("--" + boundary + "\r\n");
+                            writeUTF8ToOs(baos,"--" + boundary + "\r\n");
+                            writeUTF8ToOs(baos, String.format("Content-Disposition: form-data; name=\"%s\"\r\n", param.getName()));
+                            writeUTF8ToOs(baos, "Content-Type: text/plain; charset=utf-8\r\n");
+                            writeUTF8ToOs(baos, "\r\n");
+                            writeUTF8ToOs(baos, param.getValue().toString());
+                            writeUTF8ToOs(baos, "\r\n");
+                            writeUTF8ToOs(baos, "--" + boundary + "\r\n");
                         }
 
                         boolean first = true;
@@ -87,18 +93,27 @@ public class RestClient {
                             if (first) {
                                 first = false;
                             } else {
-                                dos.writeBytes("\r\n");
+                                writeUTF8ToOs(baos, "\r\n");
                             }
 
-                            dos.writeBytes("--" + boundary + "\r\n");
-                            dos.writeBytes(String.format("Content-Disposition: form-data; name=\"%s\";filename=\"%s\"\r\n", file.name, file.fileName));
-                            dos.writeBytes("\r\n");
-                            dos.write(file.bytes);
-                            dos.writeBytes("\r\n");
-                            dos.writeBytes("--" + boundary);
+                            writeUTF8ToOs(baos, "--" + boundary + "\r\n");
+                            writeUTF8ToOs(baos, String.format("Content-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n", file.name, file.fileName));
+                            writeUTF8ToOs(baos, "Content-Type: application/octet-stream\r\n");
+
+                            writeUTF8ToOs(baos, "\r\n");
+                            baos.write(file.bytes);
+                            writeUTF8ToOs(baos, "\r\n");
+                            writeUTF8ToOs(baos, "--" + boundary);
                         }
 
-                        dos.writeBytes("--\r\n");
+                        writeUTF8ToOs(baos, "--\r\n");
+
+                        conn.setRequestProperty("Content-Length", Integer.toString(baos.size()));
+
+                        DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+
+                        baos.writeTo(dos);
+
                         dos.flush();
                         dos.close();
                     } else if (!request.parameters.isEmpty()) {
@@ -120,7 +135,7 @@ public class RestClient {
                     break;
             }
 
-            response.setHttpURLConnection(conn);
+            response.setHttpURLConnectionAndRead(conn);
         } catch (MalformedURLException e) {
             response.setException(e);
         } catch (ProtocolException e) {
@@ -137,14 +152,15 @@ public class RestClient {
     }
     
     private URLConnection openConnection(URL url) throws IOException {
-    	URLConnection toReturn;
-    	if(proxy!=null) {
-    		toReturn=url.openConnection(proxy);
+    	URLConnection connection;
+
+    	if (proxy == null) {
+            connection = url.openConnection();
     	} else {
-    		toReturn=url.openConnection();
+            connection = url.openConnection(proxy);
     	}
     	
-    	return toReturn;
+    	return connection;
     }
 
     private String getQueryString(RestRequest request) {
@@ -181,5 +197,13 @@ public class RestClient {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void writeUTF8ToOs (OutputStream os, String str) throws java.io.IOException {
+        os.write(utfStringToBytes(str));
+    }
+
+    private byte[] utfStringToBytes (String str) {
+        return str.getBytes(Charset.forName("UTF-8"));
     }
 }

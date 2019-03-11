@@ -10,7 +10,6 @@ import com.phaxio.restclient.RestClient;
 import com.phaxio.restclient.entities.Method;
 import com.phaxio.restclient.entities.RestRequest;
 import com.phaxio.restclient.entities.RestResponse;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -96,7 +95,7 @@ public class Requests {
 
                     @Override
                     public void remove() {
-                        throw new NotImplementedException();
+                        throw new UnsupportedOperationException();
                     }
 
                     private Iterator<T> getIter () {
