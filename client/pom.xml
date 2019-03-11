@@ -4,7 +4,7 @@
 
     <groupId>com.phaxio</groupId>
     <artifactId>phaxio-java</artifactId>
-    <version>0.4.3</version>
+    <version>0.4.4</version>
 
     <name>Phaxio Java Client</name>
     <description>The official Phaxio client for the JVM</description>
@@ -37,7 +37,7 @@
         <connection>scm:git:git@github.com:phaxio/phaxio-java.git</connection>
         <developerConnection>scm:git:git@github.com:phaxio/phaxio-java.git</developerConnection>
         <url>git@github.com:phaxio/phaxio-java.git</url>
-        <tag>phaxio-java-0.4.0</tag>
+        <tag>phaxio-java-0.4.4</tag>
     </scm>
 
     <dependencies>
@@ -67,17 +67,17 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.9.7</version>
+            <version>2.9.8</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.9.7</version>
+            <version>2.9.8</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.7</version>
+            <version>2.9.8</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>

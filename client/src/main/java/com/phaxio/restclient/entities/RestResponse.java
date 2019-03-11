@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 import org.apache.commons.io.IOUtils;
 
+import java.util.List;
+import java.util.Map;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -15,22 +17,24 @@ public class RestResponse
     private HttpURLConnection conn;
     private int status = 0;
     private String content;
+    private Exception exception;
+    private JsonNode jsonNode;
+    private ObjectMapper objectMapper;
+    private byte[] rawBytes;
+    private Map<String, List<String>> headers;
 
     public RestResponse() { }
 
-    public void setHttpURLConnection (HttpURLConnection httpConnection) {
+    public void setHttpURLConnectionAndRead (HttpURLConnection httpConnection) throws IOException {
         this.conn = httpConnection;
+        readEntireResponse();
     }
 
     public String getContentType() {
-        return conn.getHeaderField("Content-Type");
+        return headers.get("Content-Type").get(0);
     }
 
     public int getStatusCode() throws IOException {
-        if (status == 0) {
-            status = conn.getResponseCode();
-        }
-
         return status;
     }
 
@@ -44,23 +48,15 @@ public class RestResponse
 
     public String getContent() throws IOException {
         if (content == null) {
-            content = Joiner.on("\n").join(IOUtils.readLines(getInputStream(), Charset.forName("UTF-8")));
+            content = new String(rawBytes, "UTF-8");
         }
 
         return content;
     }
 
     public byte[] getRawBytes() throws IOException {
-        return IOUtils.toByteArray(getInputStream());
+        return rawBytes;
     }
-
-    private Exception exception;
-
-    private InputStream getInputStream() throws IOException {
-        return getStatusCode() == 200 || getStatusCode() == 201 ? conn.getInputStream() : conn.getErrorStream();
-    }
-
-    private JsonNode jsonNode;
 
     public JsonNode toJson() throws IOException {
         if (jsonNode == null) {
@@ -70,13 +66,22 @@ public class RestResponse
         return jsonNode;
     }
 
-    private ObjectMapper objectMapper;
-
     public ObjectMapper getMapper() {
         if (objectMapper == null) {
             objectMapper = new ObjectMapper();
         }
 
         return objectMapper;
+    }
+
+    // We need to populate the response before we close the connection
+    private void readEntireResponse () throws IOException {
+        status = conn.getResponseCode();
+        headers = conn.getHeaderFields();
+        rawBytes = IOUtils.toByteArray(getInputStream());
+    }
+
+    private InputStream getInputStream() throws IOException {
+        return getStatusCode() == 200 || getStatusCode() == 201 ? conn.getInputStream() : conn.getErrorStream();
     }
 }
